@@ -111,8 +111,12 @@ function createWindow() {
 			label: '退出',
 			click: () => {
 				// mainWindow.destroy()
-				LyricWindow.destroy();
-				mainWindow.webContents.send('exit', 'out');
+				try{
+					mainWindow.webContents.send('exit', 'out');
+					LyricWindow.destroy();
+				}catch(e){
+					//TODO handle the exception
+				}
 			}
 		} // 我们需要在这里有一个真正的退出（这里直接强制退出）
 	])
@@ -131,12 +135,21 @@ function createWindow() {
 
 	ipcMain.on('postlyric', (event, arg) => {
 		console.log(arg)
-		LyricWindow.webContents.send('getlyric', arg);
+		try{
+			LyricWindow.webContents.send('getlyric', arg);
+		}catch(e){
+			//TODO handle the exception
+		}
 	})
 	
 	
 	ipcMain.on('ctrlLyWin',(event,arg)=>{
-		LyricWindow.webContents.send('LyWin', arg);
+		try{
+			LyricWindow.webContents.send('LyWin', arg);
+		}catch(e){
+			//TODO handle the exception
+		}
+		
 	})
 }
 

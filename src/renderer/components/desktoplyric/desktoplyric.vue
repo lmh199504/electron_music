@@ -39,14 +39,20 @@
 </script>
 
 <style scoped>
+	body{
+		border-radius: 10px;
+	}
 	.desktoplyric{
 		cursor: pointer;
 		height: 100%;
-		/* background: transparent; */
+		background: transparent;
 		-webkit-app-region: drag;
+		overflow: hidden;
 	}
 	.lyric{
 		/* background: transparent; */
+		background: rgba(0,0,0,0.1);
+		border-radius: 10px;
 		height: 100%;
 		line-height: 70px;
 		text-align: center;

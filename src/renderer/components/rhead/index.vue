@@ -53,7 +53,7 @@
 		</div>
 		<div class="head-right">
 			<div style="float: right;display: flex;">
-				<div class="head-img" @click="toCenter"><img src="../../static/images/head.jpg" alt="" width="30px" /></div>
+				<div class="head-img" @click="toCenter"><img src="../../static/images/center-head.jpg" alt="" width="30px" /></div>
 				<div class="window_icon icon">
 					<i class="el-icon-arrow-down"></i>
 					<i class="el-icon-user"></i>

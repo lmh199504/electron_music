@@ -6,9 +6,12 @@
 
 		<div class="enter_action" :class="{'enter_action_hide':enter_action_hide,'enter_action_hide_':enter_action_hide_}">
 			<div class="enter_text">
-				<p v-for="(item,index) in text" :key="index">
+				<!-- <p v-for="(item,index) in text" :key="index">
 					{{ item }}
-				</p>
+				</p> -->
+				<p>露婷宝宝</p>
+				<p>别生气了</p>
+				<P>你是最可爱的</P>
 			</div>
 			<div id="stars">
 				<div class="star" style="top: 0px;left: 500px;"></div>
