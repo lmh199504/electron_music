@@ -123,8 +123,12 @@ function createWindow() {
 	tray.setToolTip('猫猫音乐')
 	tray.setContextMenu(contextMenu)
 	tray.on('click', () => { // 我们这里模拟桌面程序点击通知区图标实现打开关闭应用的功能
-		mainWindow.isVisible() ? '' : mainWindow.show()
-		mainWindow.isVisible() ? mainWindow.setSkipTaskbar(false) : mainWindow.setSkipTaskbar(true)
+		try{
+			mainWindow.isVisible() ? '' : mainWindow.show()
+			mainWindow.isVisible() ? mainWindow.setSkipTaskbar(false) : mainWindow.setSkipTaskbar(true)
+		}catch(e){
+			
+		}
 	})
 
 

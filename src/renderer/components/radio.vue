@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 	
 	<div class="radio">
 		
@@ -37,6 +37,7 @@
 				groupList:[],
 				activeName:'',
 				radioList:[],
+				listArr:[]
 			}
 		},
 		created(){
@@ -51,13 +52,32 @@
 		methods:{
 
 			playRadio(radioId){
-				this.$message({
-					type:"error",
-					message:"别点了,没写",
-					offset:300
-				})
-				this.$Api.getPlayRadio(radioId).then(res=>{
-					console.log(JSON.parse(res))
+				// this.$message({
+				// 	type:"error",
+				// 	message:"别点了,没写",
+				// 	offset:300
+				// })
+				this.$Api.getRadioSong(radioId).then(res=>{
+					var songList = JSON.parse(res).songlist.data.track_list
+					this.listArr = []
+					console.log(songList)
+					for(let i = 0;i < songList.length;i++){
+						let list = songList[i]
+						this.listArr.push({
+							img: 'https://y.gtimg.cn/music/photo_new/T002R300x300M000'+list.album.mid+'.jpg?max_age=2592000',
+							singer: list.singer[0].name,
+							songid: list.id,
+							songmid: list.mid,
+							songname: list.name,
+							albumname: list.album.name,
+							interval: list.interval,
+							albumdesc: list.albumdesc
+						});
+					}
+					
+					
+					this.$store.commit('setPlaylist', this.listArr);
+					this.$store.commit('setIndex', 0);
 				})
 			}
 		},

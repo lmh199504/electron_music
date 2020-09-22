@@ -51,7 +51,7 @@ export const querySong = (query) => {
 }
 
 
-export const getSearchByKey = (key,catZhida) => {
+export const getSearchByKey = (key, catZhida) => {
 	return new Promise((resolve, reject) => {
 		rp({
 			url: apiBaseUrl + '/soso/fcgi-bin/client_search_cp',
@@ -122,42 +122,42 @@ export const getMusicVKey = (music) => {
 	const guid = '126548448'
 	const data = {
 		req: {
-		  module: "CDN.SrfCdnDispatchServer",
-		  method: "GetCdnDispatch",
-		  param: {
-			guid,
-			calltype: 0,
-			userip: ""
-		  }
+			module: "CDN.SrfCdnDispatchServer",
+			method: "GetCdnDispatch",
+			param: {
+				guid,
+				calltype: 0,
+				userip: ""
+			}
 		},
 		req_0: {
-		  module: "vkey.GetVkeyServer",
-		  method: "CgiGetVkey",
-		  param: {
-			guid,
-			songmid: [songmid],
-			songtype: [0],
-			uin: "0",
-			loginflag: 1,
-			platform: "20"
-		  }
+			module: "vkey.GetVkeyServer",
+			method: "CgiGetVkey",
+			param: {
+				guid,
+				songmid: [songmid],
+				songtype: [0],
+				uin: "0",
+				loginflag: 1,
+				platform: "20"
+			}
 		},
 		comm: {
-		  uin: 0,
-		  format: "json",
-		  ct: 24,
-		  cv: 0
+			uin: 0,
+			format: "json",
+			ct: 24,
+			cv: 0
 		}
 	}
-	
-	return new Promise((resolve,reject)=>{
+
+	return new Promise((resolve, reject) => {
 		rp({
-			uri:"https://u.y.qq.com/cgi-bin/musicu.fcg",
-			method:'GET',
-			qs:{
+			uri: "https://u.y.qq.com/cgi-bin/musicu.fcg",
+			method: 'GET',
+			qs: {
 				loginUin: 0,
 				hostUin: 0,
-				g_tk:'1124214810',
+				g_tk: '1124214810',
 				format: 'json',
 				inCharset: 'utf8',
 				outCharset: 'utf-8',
@@ -172,9 +172,9 @@ export const getMusicVKey = (music) => {
 				host: 'u.y.qq.com',
 				'content-type': 'application/x-www-form-urlencoded',
 			},
-		}).then(res=>{
+		}).then(res => {
 			resolve(res)
-		}).catch(err=>{
+		}).catch(err => {
 			reject(err)
 		})
 	})
@@ -186,7 +186,7 @@ export const getDiscList = (categoryId) => {
 		rp({
 			method: 'GET',
 			url: 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg',
-		
+
 			qs: {
 				g_tk: 1928093487,
 				inCharset: 'utf-8',
@@ -204,8 +204,8 @@ export const getDiscList = (categoryId) => {
 
 			},
 			headers: {
-			  referer: 'https://c.y.qq.com/',
-			  host: 'c.y.qq.com'
+				referer: 'https://c.y.qq.com/',
+				host: 'c.y.qq.com'
 			},
 		}).then(res => {
 
@@ -243,8 +243,8 @@ export const getSongList = (disstid) => {
 			},
 		}).then(res => {
 			// console.log(res)
-			
-			
+
+
 			resolve(res)
 
 		}).catch(err => {
@@ -677,6 +677,52 @@ export const getMvPlay = (vid) => {
 			resolve(res)
 		}).catch(err => {
 			reject(err)
+		})
+	})
+}
+
+
+//获取电台歌曲
+export const getRadioSong = (radioId) => {
+	return new Promise((resolve, reject) => {
+		const params = {
+			format: "json",
+			outCharset: "utf-8",
+			notice: 0,
+			platform: "yqq.json",
+			g_tk: 1124214810,
+			loginUin: 0,
+			hostUin: 0,
+			outCharset: 'utf-8',
+			notice: 0,
+			needNewCode: 0,
+		}
+
+		const props = {
+			method: 'get',
+			option: {},
+			params,
+		}
+
+		var data = {
+			...params,
+			data: JSON.stringify({"songlist":{"module":"pf.radiosvr","method":"GetRadiosonglist","param":{"id":Number(radioId),"firstplay":1,"num":100}},"radiolist":{"module":"pf.radiosvr","method":"GetRadiolist","param":{"ct":"24"}},"comm":{"ct":24,"cv":0}})
+		}
+		
+		
+		rp({
+			uri:'https://u.y.qq.com/cgi-bin/musicu.fcg',
+			qs: data ,
+			headers: {
+				referer: 'https://y.qq.com/portal/player.html',
+				host: 'u.y.qq.com',
+				'content-type': 'application/x-www-form-urlencoded',
+			},
+			method:"GET"
+		}).then(res => {
+			resolve(res)
+		}).catch(error => {
+			reject(error)
 		})
 	})
 }

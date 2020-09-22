@@ -152,7 +152,7 @@ export default {
             percent: 0, // 歌曲进度
             rightShow: false,
             // player_bg:"https://y.gtimg.cn/music/photo_new/T002R300x300M000002Cw7M230PBpZ.jpg?max_age=2592000"
-            player_bg: 'https://xiaohongll.oss-cn-beijing.aliyuncs.com/lmh.jpg',
+            player_bg: 'https://xiaohongll.oss-cn-beijing.aliyuncs.com/lmh.jpg?t='+Math.random(),
             songName: 'QQ音乐',
             singerName: 'QQ',
             albumname: 'QQ',
@@ -171,8 +171,6 @@ export default {
             mode: '3', // 1单曲  2// 随机  3//列表
             full: false,
             isMax: false,
-			
-			
 			lyricWindowid:'', //歌词窗口id,
 			showDeskLyric:true,
         }
@@ -439,7 +437,7 @@ export default {
                 this.currentLyric.stop()
                 this.currentLyric = null
             }
-            this.player_bg = 'https://xiaohongll.oss-cn-beijing.aliyuncs.com/lmh.jpg'
+            this.player_bg = 'https://xiaohongll.oss-cn-beijing.aliyuncs.com/lmh.jpg?t='+Math.random()
         },
         setLove() {
             this.islove = !this.islove

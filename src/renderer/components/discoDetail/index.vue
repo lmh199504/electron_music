@@ -105,6 +105,8 @@ export default {
 								interval: list.interval,
 								albumdesc: list.albumdesc
 							});
+							
+							
 						}
 					}catch(err){
 						console.log(err)

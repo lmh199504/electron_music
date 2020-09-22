@@ -12,7 +12,7 @@
 	export default{
 		data(){
 			return{
-				playLyric:'每天两首歌'
+				playLyric:'所谓伊人，在水一方.'
 			}
 				
 		},
@@ -59,6 +59,6 @@
 		font-family: 'loverabbit';
 		font-size: 30px;
 		cursor: pointer;
-		/* color: #000000; */
+		color: #43C1B4;
 	}
 </style>
