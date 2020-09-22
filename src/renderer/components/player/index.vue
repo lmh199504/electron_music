@@ -235,9 +235,7 @@ export default {
 		  if(this.voice > 0){
 			this.voice --
 			this.$refs.audio.volume = this.voice / 100
-			
 		  }
-		  
 		})
 		
     },
