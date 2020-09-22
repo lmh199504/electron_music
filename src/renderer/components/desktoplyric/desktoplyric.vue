@@ -3,6 +3,12 @@
 		<div class="lyric">
 			{{ playLyric }}
 		</div>
+		<div class="color_container">
+			<div class="color_item">1</div>
+			<div class="color_item">2</div>
+			<div class="color_item">3</div>
+			<div class="color_item">4</div>
+		</div>
 	</div>
 </template>
 
@@ -60,5 +66,26 @@
 		font-size: 30px;
 		cursor: pointer;
 		color: #43C1B4;
+	}
+	.color_container{
+		position: absolute;
+		bottom: 5px;
+		display: flex;
+		justify-content: space-between;
+		width: 100px;
+		margin: auto;
+		left: 50%;
+		margin-left: -50px;
+		cursor: pointer;
+		display: none;
+	}
+	.color_item{
+		background-color: #000000;
+		width: 15px;
+		height: 15px;
+		border-radius: 5px;
+	}
+	.desktoplyric:hover .color_container{
+		display: block;
 	}
 </style>

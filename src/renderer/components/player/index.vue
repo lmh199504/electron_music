@@ -144,6 +144,7 @@ const BrowserWindow = remote.BrowserWindow;
 const screen =  remote.screen;
 const { height } = screen.getPrimaryDisplay().workAreaSize
 const timeExp = /\[(\d{2}):(\d{2}):(\d{2})]/g
+
 export default {
     mixins: [isLoveMixin],
     data() {
@@ -205,6 +206,40 @@ export default {
                 }
             })
         }
+		
+		
+		remote.globalShortcut.register("CommandOrControl+right",()=>{
+		  // console.log("您按下了ctrl + G");
+		  this.next()
+		  
+		})
+		
+		remote.globalShortcut.register("CommandOrControl+left",()=>{
+		  // console.log("您按下了ctrl + G");
+		  this.prev()
+		  
+		})
+		
+		remote.globalShortcut.register("CommandOrControl+up",()=>{
+		  // console.log("您按下了ctrl + G");
+		  if(this.voice < 100){
+			  this.voice ++
+			  this.$refs.audio.volume = this.voice / 100
+		  }
+		  
+		})
+		
+		remote.globalShortcut.register("CommandOrControl+down",()=>{
+		  // console.log("您按下了ctrl + G");
+		  // console.log(this.voice)
+		  if(this.voice > 0){
+			this.voice --
+			this.$refs.audio.volume = this.voice / 100
+			
+		  }
+		  
+		})
+		
     },
     mounted() {
         this.$nextTick(() => {
@@ -248,7 +283,9 @@ export default {
             }
         },
         changeVoice(val) {
+			this.voice = val
             this.$refs.audio.volume = val / 100
+			
         },
         changeTime(val) {
             if (this.playing) {
