@@ -88,7 +88,6 @@ export default new Vuex.Store({
 
 		setPlaying(state, bool) {
 			state.playing = bool
-			return Promise.resolve()
 		},
 		setLove(state, music) {
 			let result = state.lovelist.findIndex(item => {

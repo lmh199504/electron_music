@@ -26,6 +26,7 @@
 	import { arr } from './utils/text.js'
 	import layout from './components/layout/index.vue'
 	import { save,read } from './utils/saveStore.js'
+
 	export default {
 		name: 'my-project',
 		data(){
@@ -48,7 +49,10 @@
 				if(this.$route.path == '/desktoplyric'){
 					return
 				}
+				
+				
 				this.$store.commit('setPlaying', false)
+				
 				save(JSON.stringify(this.$store.state)).then(res=>{
 					this.$message({
 						type:"success",
