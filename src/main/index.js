@@ -120,12 +120,6 @@ function createWindow() {
 		}
 	})
 
-
-	setTimeout(() => {
-
-	}, 3000)
-
-
 	ipcMain.on('postlyric', (event, arg) => {
 		console.log(arg)
 		try {
