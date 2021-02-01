@@ -1,6 +1,6 @@
 # electron-music
 
-> An electron-vue project
+> 模仿QQ音乐
 
 #### Build Setup
 
