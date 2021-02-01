@@ -9,9 +9,6 @@
 				<p v-for="(item,index) in text" :key="index">
 					{{ item }}
 				</p>
-				<!-- <p>露婷宝宝</p>
-				<p>别生气了</p>
-				<P>你是最可爱的</P> -->
 			</div>
 			<div id="stars">
 				<div class="star" style="top: 0px;left: 500px;"></div>
@@ -39,6 +36,11 @@
 		components: {
 			layout
 		},
+		computed: {
+			mystate: function() {
+				return this.$store.state
+			}
+		},
 		created() {
 			ipcRenderer.on('exit',(event,arg)=>{
 				var id = localStorage.getItem('lyricWindowid');
@@ -51,21 +53,21 @@
 				}
 				
 				
-				this.$store.commit('setPlaying', false)
-				
-				save(JSON.stringify(this.$store.state)).then(res=>{
-					this.$message({
-						type:"success",
-						message:res
+				this.$store.dispatch('set_playing', false).then(() => {
+					save(JSON.stringify(this.$store.state)).then(res=>{
+						this.$message({
+							type:"success",
+							message:res
+						})
+						this.$Win.quit()
+					}).catch(err=>{
+						this.$message({
+							type:"success",
+							message:'存储失败'+err
+						})
+						console.log(err)
+						this.$Win.quit()
 					})
-					this.$Win.quit()
-				}).catch(err=>{
-					this.$message({
-						type:"success",
-						message:'存储失败'+err
-					})
-					console.log(err)
-					this.$Win.quit()
 				})
 			})
 

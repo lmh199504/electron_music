@@ -3,8 +3,8 @@
 		
 		<div class="head-left">
 			<div class="myicon">
-				<i class="el-icon-arrow-left" @click="back"></i>
-				<i class="el-icon-arrow-right" @click="go"></i>
+				<i class="el-icon-arrow-left" :class="{ 'el-icon-arrow-left-active':backActive }" @click="back"></i>
+				<i class="el-icon-arrow-right" :class="{ 'el-icon-arrow-left-active':goActive }" @click="go"></i>
 			</div>
 			<div class="serach">
 				<el-input v-model="input" placeholder="搜索音乐" prefix-icon="el-icon-search" @input="searchSong"  @focus="inputFocus"></el-input>
@@ -84,7 +84,8 @@ export default {
 	  index:0,
 	  songArr:[],
 	  zhidaSinger:null,
-	  hotalbum:[]
+	  hotalbum:[],
+	  history: []
     }
   },
   created () {
@@ -97,32 +98,26 @@ export default {
 		})
 	},
 	back(){
-		// const history = JSON.parse(sessionStorage.getItem('history')) || []
-		// if(history.length != 0 && this.index!=0){
-		// 	this.index --
-		// 	history[this.index].query.no = 1;
-		// 	this.$router.push({
-		// 		path:history[this.index].path,
-		// 		query:history[this.index].query,
-		// 	})
-		// }else{
-		// 	this.index = 0
-		// }
-		// window.history.back()
+		if ( this.index !== 0) {
+			const route = this.history[this.index - 1]
+			this.index--
+			this.$router.push({
+				path:route.path,
+				query:{...route.query,back:true}
+			})
+		}
 	},
 	go(){
-		// const history = JSON.parse(sessionStorage.getItem('history')) || []
-		// if(history.length != 0 && this.index != history.length - 1){
-		// 	this.index ++;
-		// 	history[this.index].query.no = 1;
-		// 	this.$router.push({
-		// 		path:history[this.index].path,
-		// 		query:history[this.index].query,
-		// 	})
-		// }else{
-		// 	this.index = history.length - 1 ;
-		// }
-		// window.history.go()
+		
+		if ( this.index !== (this.history.length - 1)) {
+			
+			const route = this.history[this.index + 1]
+			this.index++ 
+			this.$router.push({
+				path:route.path,
+				query:{...route.query,back:true}
+			})
+		}
 	},
     minWin () {
       this.$Win.minWindow()
@@ -136,48 +131,37 @@ export default {
     },
     searchSong () {
 		//catZhida 0表示歌曲, 2表示歌手, 3表示专辑, 默认值为1
-		
 
-		
-		
-      clearTimeout(this.timer)
-      this.timer = setTimeout(() => {
-        // this.$Api.querySong(this.input).then(res => {
-        //   this.show = true
-        //   this.list = res
-        // })
-		
-		// this.
-		this.$Api.getSearchByKey(this.input,1).then(res=>{
-			this.show = true
-			console.log(JSON.parse(res))
-			this.zhidaSinger= null;
-			this.hotalbum=[]
-			let list = JSON.parse(res).data.song.list
-			this.songArr = [];
-			for(let i = 0;i<list.length;i++){
-				this.songArr.push({
-					img: 'http://imgcache.qq.com/music/photo/album_300/17/300_albumpic_' + list[i].album.id + '_0.jpg',
-					singer: list[i].singer[0].name,
-					songid: list[i].id,
-					songmid: list[i].mid,
-					songname: list[i].title,
-					albumname: list[i].album.name,
-					interval: list[i].interval,
-					albumdesc: list[i].lyric
-				})
-			}
-			if(JSON.parse(res).data.zhida.type===1){
-				this.zhidaSinger = JSON.parse(res).data.zhida.zhida_singer;
-				this.hotalbum = JSON.parse(res).data.zhida.zhida_singer.hotalbum;
-			}else{
+		clearTimeout(this.timer)
+		this.timer = setTimeout(() => {
+			this.$Api.getSearchByKey(this.input,1).then(res=>{
+				this.show = true
+				console.log(JSON.parse(res))
 				this.zhidaSinger= null;
 				this.hotalbum=[]
-			}
-			
-			
-		})
-      },500)
+				let list = JSON.parse(res).data.song.list
+				this.songArr = [];
+				for(let i = 0;i<list.length;i++){
+					this.songArr.push({
+						img: 'http://imgcache.qq.com/music/photo/album_300/17/300_albumpic_' + list[i].album.id + '_0.jpg',
+						singer: list[i].singer[0].name,
+						songid: list[i].id,
+						songmid: list[i].mid,
+						songname: list[i].title,
+						albumname: list[i].album.name,
+						interval: list[i].interval,
+						albumdesc: list[i].lyric
+					})
+				}
+				if(JSON.parse(res).data.zhida.type===1){
+					this.zhidaSinger = JSON.parse(res).data.zhida.zhida_singer;
+					this.hotalbum = JSON.parse(res).data.zhida.zhida_singer.hotalbum;
+				}else{
+					this.zhidaSinger= null;
+					this.hotalbum=[]
+				}
+			})
+		},500)
     },
     inputFocus () {
       if (this.songArr != null) {
@@ -216,11 +200,35 @@ export default {
 		})
 	}
   },
+  computed: {
+	backActive: function() {
+		return this.index !== 0
+	},
+	goActive: function() {
+		return this.index !== (this.history.length - 1)
+	}
+  },
   watch:{
-  	$route(){
-  		const history = JSON.parse(sessionStorage.getItem('history')) || [];
-  		this.index = history.length - 1
-  		// console.log(this.index);
+  	$route:{
+		handler: function(val) {
+			const index = this.history.findIndex( item => item.path === val.path )
+			console.log(val.query)
+			if (val.query.back === 'true') { // 来自返回 和 前进的路由
+				return
+			} 
+			
+			if (index >= 0) {
+				console.log('已经存在了')
+				this.history.splice(index, 1)
+				this.history.push(val)
+				this.index = this.history.length - 1
+			} else {
+				this.history.push(val)
+				this.index = this.history.length - 1
+			}
+			console.log(this.history)
+		},
+		immediate: true
   	}
   }
 }
@@ -354,8 +362,15 @@ export default {
 .mask.active{
 	display: block;
 }
-
-
+.el-icon-arrow-left,.el-icon-arrow-right {
+	color: gray;
+}
+.el-icon-arrow-left-active{
+	color: #000;
+}
+.el-icon-arrow-left-active:hover{
+	color: #1ecd98;
+}
 </style>
 <style>
 .rhead .serach .el-input__inner {

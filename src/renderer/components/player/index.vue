@@ -574,6 +574,7 @@ export default {
 					this.$refs.audio.play()
 					this.$store.commit('setPlaying', true)
 					this.player_bg = this.currentSong.img
+
 				}else{
 					console.log("等待5秒")
 					setTimeout(()=>{
@@ -601,52 +602,7 @@ export default {
 			}).catch(err=>{
 				console.log(err)
 			})
-     //        this.$Api.getPlaySrc(newSong).then(res => {
-     //            console.log(res);
 
-     //            if (res.data.items[0].vkey != '') {
-     //                let src = 'http://ws.stream.qqmusic.qq.com/' + res.data.items[0].filename + '?fromtag=0&guid=126548448&vkey=' +
-     //                    res.data.items[0].vkey
-     //                this.$refs.audio.src = src
-     //                if (this.currentLyric) {
-     //                    this.currentLyric.stop()
-     //                    // 重置为null
-     //                    this.currentLyric = null
-     //                    this.currentTime = 0
-     //                    this.playingLyric = ''
-     //                    this.currentLineNum = 0
-     //                }
-
-     //                this.getLyric()
-     //                this.$refs.audio.play()
-     //                this.$store.commit('setPlaying', true)
-     //                this.player_bg = this.currentSong.img
-     //                // console.log('.....')
-     //            } else {
-     //                // 下一首
-					// console.log("等待5秒")
-     //                setTimeout(()=>{
-     //                    if (this.currentLyric) {
-     //                        this.currentLyric.stop()
-     //                        // 重置为null
-     //                        this.currentLyric = null
-     //                        this.currentTime = 0
-     //                        this.playingLyric = ''
-     //                        this.currentLineNum = 0
-     //                    }
-     //                    this.$message({
-     //                        type: 'error',
-     //                        message: 'VIP歌曲',
-     //                        offset: 300
-     //                    })
-
-     //                    if (this.playlist.length > 1) {
-     //                        // this.songReady = true
-     //                        this.next()
-     //                    }
-     //                },5000)
-     //            }
-     //        })
         },
         playlist(newList) {
             if (newList.length == 0) {

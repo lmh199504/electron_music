@@ -16,7 +16,6 @@ export default new Vuex.Store({
 		isTop: true,
 		currentIndex: -1,
 		playlist: [],
-
 		playing: false,
 		lovelist: [],
 		history: [], // 播放历史
@@ -153,6 +152,14 @@ export default new Vuex.Store({
 		},
 
 
+	},
+	actions: {
+		set_playing({ commit }, bool) {
+			return new Promise(resolve => {
+				commit('setPlaying', bool)
+				resolve()
+			})
+		}
 	},
 	// plugins: [
 	//   createPersistedState(),
