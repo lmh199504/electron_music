@@ -48,7 +48,7 @@ function createWindow() {
 		y: height - 100,
 		fullscreenable: false,
 		// minimizable: false,
-		// maximizable: false,
+		maximizable: false,
 		resizable: true,
 		transparent: true,
 		alwaysOnTop: true,
