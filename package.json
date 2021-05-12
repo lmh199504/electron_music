@@ -61,7 +61,7 @@
     "lyric-parser": "^1.0.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
-    "swiper": "^5.3.6",
+    "swiper": "^6.5.1",
     "vue": "^2.5.16",
     "vue-awesome-swiper": "^4.1.1",
     "vue-electron": "^1.0.6",
