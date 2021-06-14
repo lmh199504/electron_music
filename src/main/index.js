@@ -95,7 +95,7 @@ function createWindow() {
 	mainWindow.on('ready-to-show', function() {
 		mainWindow.show() // 初始化后再显示
 	})
-	tray = new Tray(`${__static}/trayicon.ico`)
+	tray = new Tray(`${__static}/icon.ico`)
 	const contextMenu = Menu.buildFromTemplate([{
 			label: '退出',
 			click: () => {
@@ -104,7 +104,7 @@ function createWindow() {
 					mainWindow.webContents.send('exit', 'out');
 					LyricWindow.destroy();
 				} catch (e) {
-					//TODO handle the exception
+					//TODO handle the exceptions
 				}
 			}
 		} // 我们需要在这里有一个真正的退出（这里直接强制退出）

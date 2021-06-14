@@ -36,7 +36,7 @@
 		data(){
 			return{
 				coverImg:'../../static/images/center-head.jpg',
-				singer:'海绵宝宝',
+				singer:'韶华的华',
 				activeName:'first'
 			}
 		},
